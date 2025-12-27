@@ -37,9 +37,10 @@ public class LoginForm extends JFrame {
         User user = authService.login(username);
 
         if (user != null) {
-            JOptionPane.showMessageDialog(this,
-                    "Login berhasil: " + user.getUsername());
+            new Dashboard(user).setVisible(true);
             dispose();
+        
+
             // next: open Dashboard
         } else {
             JOptionPane.showMessageDialog(this,
