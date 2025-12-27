@@ -1,7 +1,10 @@
 {
-    "java.project.sourcePaths": ["src"],
+    "java.project.sourcePaths": [
+        "src"
+    ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib\\mysql-connector-java-8.0.20.jar",
+        "c:\\Users\\Lenovo\\Documents\\ARIS STYAWAN\\booking-hotel-java\\lib\\mysql-connector-java-8.0.20.jar"
     ]
 }
