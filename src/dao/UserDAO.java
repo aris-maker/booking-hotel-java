@@ -3,37 +3,51 @@ package dao;
 import config.DatabaseConfig;
 import model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class UserDAO {
 
-    public User save(User user) {
-        try (Connection conn = DatabaseConfig.getConnection()) {
+    public User findByUsername(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
 
-            System.out.println("Saving user: " + user.getUsername());
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            String sql = "INSERT INTO users(username, role) VALUES (?, ?)";
-            PreparedStatement ps =
-                conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
 
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getRole());
-
-            int affectedRows = ps.executeUpdate();
-            System.out.println("Rows inserted: " + affectedRows);
-
-            ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                System.out.println("User saved with ID: " + rs.getInt(1));
+                return new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("role")
+                );
             }
 
-            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User save(String username, String role) {
+        String sql = "INSERT INTO users (username, role) VALUES (?, ?)";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                     sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, role);
+            stmt.executeUpdate();
+
+            ResultSet keys = stmt.getGeneratedKeys();
+            if (keys.next()) {
+                return new User(keys.getInt(1), username, role);
+            }
 
         } catch (Exception e) {
-            e.printStackTrace(); // WAJIB untuk debug
+            e.printStackTrace();
         }
         return null;
     }

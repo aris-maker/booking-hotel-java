@@ -1,14 +1,20 @@
 package model;
 
 public class Room {
+    private int id;
     private int roomNumber;
     private String type;
     private boolean available;
 
-    public Room(int roomNumber, String type) {
+    public Room(int id, int roomNumber, String type, boolean available) {
+        this.id = id;
         this.roomNumber = roomNumber;
         this.type = type;
-        this.available = true;
+        this.available = available;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getRoomNumber() {

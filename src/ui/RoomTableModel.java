@@ -5,7 +5,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class RoomTableModel extends AbstractTableModel {
-
+    
     private final String[] columns = {"Room Number", "Type", "Available"};
     private List<Room> rooms;
 

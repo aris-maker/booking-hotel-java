@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+
+
+
 public class Dashboard extends JFrame {
 
     private User user;
@@ -21,7 +24,8 @@ public class Dashboard extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JLabel welcome = new JLabel("Welcome, " + user.getUsername());
+       JLabel welcome = new JLabel("Welcome, " + this.user.getUsername());
+
         add(welcome, BorderLayout.NORTH);
 
         List<Room> rooms = roomService.getAvailableRooms();
@@ -30,5 +34,20 @@ public class Dashboard extends JFrame {
 
         JButton bookBtn = new JButton("Book Room");
         add(bookBtn, BorderLayout.SOUTH);
+
+        bookBtn.addActionListener(e -> {
+            int row = table.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select a room first");
+                return;
+            }
+        
+            RoomTableModel model = (RoomTableModel) table.getModel();
+            Room selectedRoom = model.getRoomAt(row);
+        
+            new BookingForm(this, user, selectedRoom).setVisible(true);
+        });
+        
+
     }
 }

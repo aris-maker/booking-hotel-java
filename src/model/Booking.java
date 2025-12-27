@@ -1,6 +1,7 @@
 package model;
 
 public class Booking {
+
     private User user;
     private Room room;
     private int nights;
@@ -11,13 +12,15 @@ public class Booking {
         this.nights = nights;
     }
 
-    public void showBookingInfo() {
-        System.out.println(
-            user.getUsername() +
-            " booked room " +
-            room.getRoomNumber() +
-            " for " +
-            nights + " nights"
-        );
+    public User getUser() {
+        return user;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public int getNights() {
+        return nights;
     }
 }

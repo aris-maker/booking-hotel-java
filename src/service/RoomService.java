@@ -1,35 +1,32 @@
 package service;
 
+import dao.RoomDAO;
 import model.Room;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class RoomService {
 
-    private List<Room> rooms = new ArrayList<>();
+    private RoomDAO roomDAO = new RoomDAO();
 
-    public RoomService() {
-        rooms.add(new Room(101, "Standard"));
-        rooms.add(new Room(102, "Deluxe"));
-        rooms.add(new Room(201, "Suite"));
-    }
-
+    // ===============================
+    // GET AVAILABLE ROOMS
+    // ===============================
     public List<Room> getAvailableRooms() {
-        List<Room> available = new ArrayList<>();
-        for (Room room : rooms) {
-            if (room.isAvailable()) {
-                available.add(room);
-            }
-        }
-        return available;
+        return roomDAO.getAvailableRooms();
     }
 
-    public Room findRoom(int roomNumber) {
-        for (Room room : rooms) {
-            if (room.getRoomNumber() == roomNumber) {
-                return room;
-            }
-        }
-        return null;
+    // ===============================
+    // FIND ROOM BY ID
+    // ===============================
+    public Room findRoomById(int id) {
+        return roomDAO.findById(id);
+    }
+
+    // ===============================
+    // UPDATE ROOM AVAILABILITY
+    // ===============================
+    public void setRoomAvailability(int roomId, boolean available) {
+        roomDAO.updateAvailability(roomId, available);
     }
 }

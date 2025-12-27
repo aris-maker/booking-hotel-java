@@ -8,8 +8,12 @@ public class AuthService {
     private UserDAO userDAO = new UserDAO();
 
     public User login(String username) {
-        String role = username.equalsIgnoreCase("admin") ? "ADMIN" : "GUEST";
-        User user = new User(username, role);
-        return userDAO.save(user);
+        User user = userDAO.findByUsername(username);
+
+        if (user == null) {
+            user = userDAO.save(username, "GUEST");
+        }
+
+        return user;
     }
 }
